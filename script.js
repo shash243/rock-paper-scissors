@@ -14,8 +14,8 @@ function getComputerChoice() {
 
 function playRound(playerSelection, computerSelection) {
     const div = document.querySelector('div.main');
-    while(div.firstChild){
-    div.removeChild(div.lastChild);
+    while (div.firstChild) {
+        div.removeChild(div.lastChild);
     }
     const divResult = document.createElement('div');
     div.classList.add('roundResult');
@@ -39,47 +39,46 @@ function playRound(playerSelection, computerSelection) {
     return num;
 }
 
-// function game() {
-//     let countPlayer = 0;
-//     let countComputer = 0; resultDiv.textContent = Result;
-//     const buttons = document.querySelectorAll('button');
-//     result = buttons.forEach((button) => {
-//         button.addEventListener('click', () => {
-//             playRound(button.value, getComputerChoice());
-//         });
-//     });
-//     console.log(result);
-//     const div = document.querySelector('div.main');
-//     const resultDiv = document.querySelector('div.roundResult');
-//     for (let i = 0; (i < 5); i++) {
-//         let inp = buttons.value;
-//         let playerSelection = inp.toLowerCase();
-//         let computerSelection = getComputerChoice();
-//         let result = playRound(playerSelection, computerSelection);
-//         if (result === `You lose! ${computerSelection} beats ${playerSelection}`) {
-//             ++countComputer;
-//             resultDiv.textContent = result;
-//         } else if (result == `You win! ${playerSelection} beats ${computerSelection}`) {
-//             ++countPlayer;
-//             resultDiv.textContent = result;
-//         } else {
-//             resultDiv.textContent = result;
-//         }
-//     }
-//     div.appendChild(resultDiv);
-//     if (countPlayer > countComputer) {
-//         console.log("You win");
-//     } else if (countComputer > countPlayer) {
-//         console.log("Computer wins");
-//     } else {
-//         console.log("It is a tie");
-//     }
-// }
 function game() {
     const div = document.querySelector('div.main');
     const buttons = document.querySelectorAll('button');
+    const divRes = document.querySelector('div.score');
+    const divFinal = document.querySelector('div.final');
+    console.log(divRes);
+    let cCount = 0;
+    let pCount = 0;
+    let num = 0;
     buttons.forEach((button) => button.addEventListener('click', () => {
-        playRound(button.value, getComputerChoice());
+        if (cCount < 5 && pCount < 5) {
+            num = playRound(button.value, getComputerChoice());
+            if (num === 1) {
+                ++cCount;
+                console.log(cCount);
+                console.log(pCount);
+            } else if (num === 3) {
+                ++pCount;
+                console.log(cCount);
+                console.log(pCount);
+            } else {
+
+            }
+            while (divRes.firstChild) {
+                divRes.removeChild(divRes.lastChild);
+            }
+            let pRes = document.createElement('p');
+            pRes.textContent = `You: ${pCount} Computer: ${cCount}`;
+            divRes.appendChild(pRes);
+        } else {
+            let pFin = document.createElement('p');
+            if(cCount === 5){
+            pFin.textContent = "You lose";
+        } else if (pCount === 5){
+            pFin.textContent = "You win";
+        } else {
+            pFin.textContent = "It is a tie";
+        }
+            divFinal.appendChild(pFin);
+        }
     }));
 }
 game();
